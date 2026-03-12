@@ -28,13 +28,18 @@ on:
       width:
         description: "Window width (px)"
         required: false
-        default: "1200"
+        default: "1000"
       height:
         description: "Window height (px)"
         required: false
-        default: "780"
+        default: "750"
       fullscreen:
         description: "Start in fullscreen mode"
+        required: false
+        type: boolean
+        default: false
+      debug:
+        description: "Start in debug mode"
         required: false
         type: boolean
         default: false
@@ -116,6 +121,10 @@ jobs:
             ARGS+=("--fullscreen")
           fi
 
+          if [ "${{ inputs.debug }}" == "true" ]; then
+            ARGS+=("--debug")
+          fi
+
           if [ "${{ inputs.hide_title_bar }}" == "true" ]; then
             ARGS+=("--hide-title-bar")
           fi
@@ -152,6 +161,10 @@ jobs:
 
           if ("${{ inputs.fullscreen }}" -eq "true") {
             $args += "--fullscreen"
+          }
+
+          if ("${{ inputs.debug }}" -eq "true") {
+            $args += "--debug"
           }
 
           if ("${{ inputs.hide_title_bar }}" -eq "true") {
